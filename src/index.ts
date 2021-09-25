@@ -256,9 +256,12 @@ export async function replaceTscAliasPaths(
   };
 
   // Finding files and changing alias paths
+  const outPathWithoutBrackets = outPath
+    .replace(/\(/g, '\\(')
+    .replace(/\)/g, '\\)');
   const globPattern = [
-    `${outPath}/**/*.{js,jsx,d.ts,d.tsx}`,
-    `!${outPath}/**/node_modules`
+    `${outPathWithoutBrackets}/**/*.{js,jsx,d.ts,d.tsx}`,
+    `!${outPathWithoutBrackets}/**/node_modules`
   ];
   const files = sync(globPattern, {
     dot: true,
